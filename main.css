@@ -1,0 +1,57 @@
+body {
+    color:#302939;
+}
+
+header {
+    background-color: #50595C;
+    color: #FFF
+    }
+
+
+
+a, a:hover {
+    font-family: "Cousine", cursive;
+    color: #E99B9B;
+}
+
+.navbar {
+    color:#302939;
+}
+
+#question-content, .intro {
+    font-size: 120%;
+}
+
+#start-btn {
+    background-color: #E99B9B;
+    font-family: "Cousine";
+}
+
+#start-btn:hover {
+    background-color:#e97171;
+}
+
+span {
+    font-family: "Cousine";
+}
+
+.answer-text {
+    font-family: "Cousine";
+    line-height: 200%;
+}
+
+.answer-background {
+    background-color: #FFD8D8;
+}
+
+.in-quiz-btn {
+    background-color: #50595C;
+    color: white;
+}
+
+.in-quiz-btn:hover {
+    background-color: #302939;
+}
+
+
+
