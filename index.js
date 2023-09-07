@@ -3,19 +3,65 @@
 let currentQuestionNumber;
 let score;
 
-// array containing html for individual questions
+// array of quiz question objects
 
-const questionHtml = ['<div id="question-content"><h4 class="pt-3">Question 1 / 6</h4><p>Insert the missing part of the code to return the number of items in the <span>moons</span> array.</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">moons = [“Charon”, “Hydra”, “Kerberos”, “Nix”, “Styx”];<br>moons.<input id="answer-input" type="text" size="6" autofocus autocomplete="off">;</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>', '<div id="question-content"><h4 class="pt-3">Question 2 / 6</h4><p>Insert the missing part of the code to return the string <span>"merry-go-round"</span>.</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">words = ["merry", "go", "round"];<br>words.join(<input id="answer-input" type="text" size="3" autofocus autocomplete="off">);</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>', '<div id="question-content"><h4 class="pt-3">Question 3 / 6</h4><p>Insert the missing part of the code to add <span>"macaroni"</span> to the end of the <span>pasta</span> array.</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">pasta = ["spaghetti", "penne", "fusilli"];<br>pasta.<input id="answer-input" type="text" size="4" autofocus autocomplete="off">("macaroni");</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>', '<div id="question-content"><h4 class="pt-3">Question 4 / 6</h4><p>Insert the missing part of the code to remove <span>"Bert"</span> from the end of the <span>beatles</span> array.</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">beatles = ["John", "Paul", "George", "Ringo", "Bert"];<br>beatles.pop<input id="answer-input" type="text" size="2" autofocus autocomplete="off">;</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>', '<div id="question-content"><h4 class="pt-3">Question 5 / 6</h4><p>Insert the missing part of the code to change the value of <span>"None"</span> to <span>"Null"</span> in the <span>dataTypes</span> array.</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">dataTypes = ["String", "Boolean", "None"];<br>dataTypes<input id="answer-input" type="text" size="3" autofocus autocomplete="off"> = "Null";</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>', '<div id="question-content"><h4 class="pt-3">Question 6 / 6</h4><p>Insert the missing part of the code to add <span>"five"</span> and <span>"four"</span> to the start of the <span>countdown</span> array.</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">countdown = ["three", "two", "one", "lift-off"];<br>countdown.<input id="answer-input" type="text" size="7" autofocus autocomplete="off">("five", "four");</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>'];
+const questions = 
+    [
+        {
+        'number' : 1,
+        'task': 'Insert the missing part of the code to return the number of items in the <span>moons</span> array.',
+        'codeSnippet': 'moons = [“Charon”, “Hydra”, “Kerberos”, “Nix”, “Styx”];<br>moons.<input id="answer-input" type="text" size="6" autofocus autocomplete="off">;',
+        'answer': 'length'
+        },
 
-// array containing correct answers to quiz questions
+        {
+        'number': 2,
+        'task': 'Insert the missing part of the code to return the string <span>"merry-go-round"</span>.',
+        'codeSnippet': 'words = ["merry", "go", "round"];<br>words.join(<input id="answer-input" type="text" size="3" autofocus autocomplete="off">);',
+        'answer': '"-"'
+        },
 
-const questionAnswers = ['length', '"-"', 'push', '()', '[2]', 'unshift'];
+        {
+        'number': 3,
+        'task': 'Insert the missing part of the code to add <span>"macaroni"</span> to the end of the <span>pasta</span> array.',
+        'codeSnippet': 'pasta = ["spaghetti", "penne", "fusilli"];<br>pasta.<input id="answer-input" type="text" size="4" autofocus autocomplete="off">("macaroni");',
+        'answer': 'push'
+        },
 
-// arrays containing html for correct / incorrect answer messages
+        {
+        'number': 4,
+        'task': 'Insert the missing part of the code to remove <span>"Bert"</span> from the end of the <span>beatles</span> array.',
+        'codeSnippet': 'beatles = ["John", "Paul", "George", "Ringo", "Bert"];<br>beatles.pop<input id="answer-input" type="text" size="2" autofocus autocomplete="off">;',
+        'answer': '()'    
+        },
 
-const correctMessageHtml = '<div class="answer-background p-3"><h4><i class="fa-solid fa-check pr-2"></i>That&#39;s the right answer!</h4></div><button id="next-question-btn" class="in-quiz-btn btn btn-lg mt-3">Next question <i class="fa-solid fa-chevron-right"></i></button>'
+        {
+        'number': 5,
+        'task': 'Insert the missing part of the code to change the value of <span>"None"</span> to <span>"Null"</span> in the <span>dataTypes</span> array.',
+        'codeSnippet': 'dataTypes = ["String", "Boolean", "None"];<br>dataTypes<input id="answer-input" type="text" size="3" autofocus autocomplete="off"> = "Null";',
+        'answer': '[2]'
+        },
 
-const incorrectMessageHtml = '<div class="answer-background p-3"><h4><i class="fa-solid fa-xmark pr-2"></i>Incorrect</h4></div><button id="try-again-btn" class="in-quiz-btn btn btn-lg mr-2 mt-3">Try again</button><button id="next-question-btn" class="in-quiz-btn btn btn-lg mt-3">Next question <i class="fa-solid fa-chevron-right"></i></button>'
+        {
+        'number': 6,
+        'task': 'Insert the missing part of the code to add <span>"five"</span> and <span>"four"</span> to the start of the <span>countdown</span> array.',
+        'codeSnippet': 'countdown = ["three", "two", "one", "lift-off"];<br>countdown.<input id="answer-input" type="text" size="7" autofocus autocomplete="off">("five", "four");',
+        'answer': 'unshift'
+        }
+    ];
+
+// function to create html for a question object
+
+    function makeQuestionHtml(num) {
+        return '<div id="question-content"><h4 class="pt-3">Question ' + questions[num].number +'/ 6</h4><p>' + questions[num].task +'</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">' + questions[num].codeSnippet + '</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>'
+    };
+
+// add html for each quiz question to an array
+
+let questionHtml = [];
+for (let i=0; i<questions.length; i++) {
+    questionHtml.push(makeQuestionHtml(i));
+}
  
 // add event listener to "Start the quiz" button
 
@@ -38,7 +84,7 @@ function startQuiz() {
 function checkAnswer() {
     submittedAnswer = document.getElementById("answer-input").value;
 
-    if ((submittedAnswer === questionAnswers[currentQuestionNumber-1]) || (currentQuestionNumber===2 && ["'-'", "`-`"].includes(submittedAnswer))) {
+    if ((submittedAnswer === questions[currentQuestionNumber-1].answer) || (currentQuestionNumber===2 && ["'-'", "`-`"].includes(submittedAnswer))) {
         
         // increment the score by 1
         score++;
@@ -54,8 +100,11 @@ function checkAnswer() {
 // function to display page content for when a question is answered correctly
 
 function showCorrectMessage() {
-    document.getElementById("changeable-content-subblock").innerHTML = correctMessageHtml;
 
+    // update html content
+    document.getElementById("changeable-content-subblock").innerHTML = '<div class="answer-background p-3"><h4><i class="fa-solid fa-check pr-2"></i>That&#39;s the right answer!</h4></div><button id="next-question-btn" class="in-quiz-btn btn btn-lg mt-3">Next question <i class="fa-solid fa-chevron-right"></i></button>';
+
+    // add event listeners
     if (currentQuestionNumber<6) {
         nextQuestionButton = document.getElementById("next-question-btn");
         nextQuestionButton.addEventListener("click", showNextQuestion);
@@ -72,8 +121,10 @@ function showCorrectMessage() {
 // function to show page content for when a question is answered incorrectly
 
 function showIncorrectMessage() {
-    document.getElementById("changeable-content-subblock").innerHTML = incorrectMessageHtml;
+    // update html content
+    document.getElementById("changeable-content-subblock").innerHTML = '<div class="answer-background p-3"><h4><i class="fa-solid fa-xmark pr-2"></i>Incorrect</h4></div><button id="try-again-btn" class="in-quiz-btn btn btn-lg mr-2 mt-3">Try again</button><button id="next-question-btn" class="in-quiz-btn btn btn-lg mt-3">Next question <i class="fa-solid fa-chevron-right"></i></button>';
 
+    // add event listeners
     if (currentQuestionNumber<6) {
         nextQuestionButton = document.getElementById("next-question-btn");
         nextQuestionButton.addEventListener("click", showNextQuestion);
