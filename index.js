@@ -53,7 +53,7 @@ const questions =
 // function to create html for a question object
 
     function makeQuestionHtml(num) {
-        return '<div id="question-content"><h4 class="pt-3">Question ' + questions[num].number +'/ 6</h4><p>' + questions[num].task +'</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">' + questions[num].codeSnippet + '</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>'
+        return '<div id="question-content"><h4 class="pt-3">Question ' + questions[num].number +' / 6</h4><p>' + questions[num].task +'</p><div id="changeable-content-subblock"><div class="answer-background p-3"><p class="answer-text">' + questions[num].codeSnippet + '</p></div><button id="submit-btn" class="in-quiz-btn btn btn-lg mt-3">Submit answer</button></div></div>'
     };
 
 // add html for each quiz question to an array
