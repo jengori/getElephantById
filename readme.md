@@ -1,0 +1,1 @@
+![getElephantByID logo](logo.jpg)
